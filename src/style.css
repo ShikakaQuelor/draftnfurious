@@ -1,0 +1,236 @@
+@import "tailwindcss";
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&display=swap');
+
+/* Custom animations for MTG card-inspired app */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes glow {
+  0%, 100% {
+    box-shadow: 0 0 20px rgba(218, 165, 32, 0.3);
+  }
+  50% {
+    box-shadow: 0 0 30px rgba(218, 165, 32, 0.5), 0 0 40px rgba(218, 165, 32, 0.3);
+  }
+}
+
+/* MTG Card Back inspired background */
+body {
+  background: linear-gradient(135deg, 
+    #2d1810 0%,   /* Dark brown */
+    #3d2817 25%,  /* Medium brown */
+    #5d4037 50%,  /* Rich brown */
+    #6d4c41 75%,  /* Warm brown */
+    #8d6e63 100%  /* Light brown */
+  );
+  min-height: 100vh;
+  margin: 0;
+  padding: 0;
+  font-family: 'Cinzel', 'Times New Roman', serif;
+  color: #f5f5dc;
+}
+
+/* Enhanced button component styles */
+.btn {
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.5rem;
+  font-weight: 700;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  border: 2px solid;
+  display: inline-block;
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-family: 'Cinzel', serif;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.btn:not(:disabled):hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, #b8860b, #daa520, #ffd700);
+  color: #2d1810;
+  border-color: #daa520;
+}
+
+.btn-primary:hover:not(:disabled) {
+  background: linear-gradient(135deg, #daa520, #ffd700, #ffed4a);
+  box-shadow: 0 8px 25px rgba(218, 165, 32, 0.4);
+}
+
+.btn-secondary {
+  background: linear-gradient(135deg, #5d4037, #8d6e63, #a1887f);
+  color: #f5f5dc;
+  border-color: #8d6e63;
+}
+
+.btn-success {
+  background: linear-gradient(135deg, #2e7d32, #388e3c, #4caf50);
+  color: #f5f5dc;
+  border-color: #4caf50;
+}
+
+.btn-warning {
+  background: linear-gradient(135deg, #ff8f00, #ffa726, #ffb74d);
+  color: #2d1810;
+  border-color: #ffa726;
+}
+
+.btn-danger {
+  background: linear-gradient(135deg, #c62828, #d32f2f, #f44336);
+  color: #f5f5dc;
+  border-color: #d32f2f;
+}
+
+.btn-sm {
+  padding: 0.5rem 1rem;
+  font-size: 0.875rem;
+}
+
+.btn-large {
+  padding: 1.25rem 2.5rem;
+  font-size: 1.25rem;
+}
+
+/* MTG Card-inspired styles */
+.card {
+  background: linear-gradient(135deg, 
+    rgba(61, 40, 23, 0.95),
+    rgba(77, 48, 32, 0.9),
+    rgba(93, 64, 55, 0.85)
+  );
+  backdrop-filter: blur(10px);
+  border: 2px solid #daa520;
+  border-radius: 0.75rem;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+}
+
+.card-hover {
+  transition: all 0.3s ease;
+}
+
+.card-hover:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+  border-color: #ffd700;
+}
+
+.glass {
+  background: rgba(61, 40, 23, 0.4);
+  backdrop-filter: blur(15px);
+  border: 1px solid rgba(218, 165, 32, 0.3);
+}
+
+.glass-dark {
+  background: rgba(45, 24, 16, 0.8);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(218, 165, 32, 0.4);
+}
+
+/* Gradient text effects */
+.text-gradient {
+  background: linear-gradient(135deg, #daa520, #ffd700, #ffed4a);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.text-gradient-gold {
+  background: linear-gradient(135deg, #b8860b, #daa520, #ffd700);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.text-gradient-bronze {
+  background: linear-gradient(135deg, #cd853f, #daa520, #f4a460);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Input styles */
+.input-glass {
+  background: rgba(45, 24, 16, 0.8);
+  backdrop-filter: blur(10px);
+  border: 2px solid rgba(218, 165, 32, 0.4);
+  color: #f5f5dc;
+  transition: all 0.3s ease;
+  font-family: 'Cinzel', serif;
+}
+
+.input-glass:focus {
+  border-color: #daa520;
+  box-shadow: 0 0 20px rgba(218, 165, 32, 0.3);
+  outline: none;
+}
+
+.input-glass::placeholder {
+  color: #a1887f;
+  font-style: italic;
+}
+
+/* Progress bar */
+.progress-glow {
+  background: linear-gradient(90deg, #b8860b, #daa520, #ffd700);
+  animation: glow 2s ease-in-out infinite alternate;
+}
+
+/* Simplified decorative elements */
+.mtg-separator {
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #daa520, #ffd700, #daa520, transparent);
+  position: relative;
+}
+
+.mtg-separator::after {
+  content: '◆';
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  background: #3d2817;
+  color: #daa520;
+  padding: 0 8px;
+  font-size: 12px;
+}
+
+/* Simplified parchment text */
+.parchment-text {
+  font-family: 'Cinzel', serif;
+  text-shadow: 1px 1px 2px rgba(45, 24, 16, 0.5);
+}
+
+/* Simplified ornate border */
+.ornate-border {
+  position: relative;
+}
+
+.ornate-border::before {
+  content: '⚜️';
+  position: absolute;
+  top: -12px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #3d2817;
+  padding: 0 8px;
+  font-size: 16px;
+  z-index: 10;
+}
