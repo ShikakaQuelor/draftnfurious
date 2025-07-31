@@ -6,8 +6,8 @@
       type="number" 
       min="0" 
       max="120" 
-      :value="modelValue"
-      @input="$emit('update:modelValue', Number(($event.target as HTMLInputElement).value))"
+      :value="modelValue || ''"
+      @input="handleInput"
       placeholder="Leave empty for eternal rounds..."
       class="input-glass w-full p-4 sm:p-5 rounded-xl text-lg sm:text-xl font-semibold text-center"
     />
@@ -16,12 +16,22 @@
 
 <script setup lang="ts">
 interface Props {
-  modelValue: number
+  modelValue?: number
 }
 
 defineProps<Props>()
 
-defineEmits<{
-  'update:modelValue': [value: number]
+const emit = defineEmits<{
+  'update:modelValue': [value: number | undefined]
 }>()
+
+function handleInput(event: Event) {
+  const value = (event.target as HTMLInputElement).value
+  if (value === '' || value === null) {
+    emit('update:modelValue', undefined)
+  } else {
+    const numValue = Number(value)
+    emit('update:modelValue', isNaN(numValue) ? undefined : numValue)
+  }
+}
 </script>
