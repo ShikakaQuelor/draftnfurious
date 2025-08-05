@@ -80,6 +80,7 @@
           :is-last-round="tournamentStore.isLastRound"
           :current-round="tournamentStore.currentRound"
           @advance-round="tournamentStore.advanceToNextRound"
+          @previous-round="tournamentStore.goToPreviousRound"
           @go-to-summary="goToSummary"
           @show-reset-confirm="showResetConfirm = true"
         />
@@ -102,6 +103,7 @@
           :is-last-round="tournamentStore.isLastRound"
           :current-round="tournamentStore.currentRound"
           @advance-round="tournamentStore.advanceToNextRound"
+          @previous-round="tournamentStore.goToPreviousRound"
           @go-to-summary="goToSummary"
           @show-reset-confirm="showResetConfirm = true"
         />

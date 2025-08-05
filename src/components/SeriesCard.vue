@@ -71,9 +71,9 @@
               :game="game" 
               :series-complete="series.isComplete"
               :get-player-name="getPlayerName"
-              @record-win="$emit('record-win', $event[0], $event[1])"
-              @record-draw="$emit('record-draw', $event)"
-              @clear-result="$emit('clear-result', $event)"
+              @record-win="(gameId, winnerId) => $emit('record-win', gameId, winnerId)"
+              @record-draw="(gameId) => $emit('record-draw', gameId)"
+              @clear-result="(gameId) => $emit('clear-result', gameId)"
             />
           </div>
         </div>

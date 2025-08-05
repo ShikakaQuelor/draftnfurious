@@ -28,12 +28,12 @@ export interface Series {
     draws: number
     seriesWinner?: string
     isComplete: boolean
+    pointsAwarded?: boolean // Track if points have been awarded
 }
 
 export interface TournamentConfig {
     playerCount: number
     format: 'round-robin' | 'swiss' | 'single-elimination'
-    totalGames?: number
     gamesPerOpponent: number
     roundTimerMinutes?: number
     pointsPerWin: number
@@ -151,8 +151,8 @@ export const useTournamentStore = defineStore('tournament', () => {
             }
         }
 
-        // Award points when series is completed
-        if (seriesData.isComplete && seriesData.seriesWinner) {
+        // Award points when series is completed (only if not already awarded)
+        if (seriesData.isComplete && seriesData.seriesWinner && !seriesData.pointsAwarded) {
             const player1 = players.value.find(p => p.id === seriesData.player1Id)
             const player2 = players.value.find(p => p.id === seriesData.player2Id)
 
@@ -166,6 +166,9 @@ export const useTournamentStore = defineStore('tournament', () => {
                 if (player2) player2.points += config.value.pointsPerWin
                 if (player1) player1.points += config.value.pointsPerLoss
             }
+
+            // Mark that points have been awarded
+            seriesData.pointsAwarded = true
         }
     }
 
@@ -326,8 +329,6 @@ export const useTournamentStore = defineStore('tournament', () => {
             throw new Error('Need at least 2 players to start tournament')
         }
 
-        console.log('Starting tournament with', players.value.length, 'players')
-
         // Generate pairings based on format
         if (config.value.format === 'round-robin') {
             generateRoundRobinPairings()
@@ -335,13 +336,9 @@ export const useTournamentStore = defineStore('tournament', () => {
             generateSingleEliminationPairings()
         }
 
-        console.log('Generated', games.value.length, 'games')
-
         isSetupComplete.value = true
         tournamentStarted.value = true
         currentRound.value = 1
-
-        console.log('Tournament started')
 
         // Start timer if configured
         if (config.value.roundTimerMinutes) {
@@ -381,8 +378,8 @@ export const useTournamentStore = defineStore('tournament', () => {
         const seriesData = series.value.find(s => s.id === game.seriesId)
         if (!seriesData) return
 
-        // If series was complete, remove the points
-        if (seriesData.isComplete && seriesData.seriesWinner) {
+        // If series was complete and points were awarded, remove the points
+        if (seriesData.isComplete && seriesData.seriesWinner && seriesData.pointsAwarded) {
             const player1 = players.value.find(p => p.id === seriesData.player1Id)
             const player2 = players.value.find(p => p.id === seriesData.player2Id)
 
@@ -396,6 +393,9 @@ export const useTournamentStore = defineStore('tournament', () => {
                 if (player2) player2.points -= config.value.pointsPerWin
                 if (player1) player1.points -= config.value.pointsPerLoss
             }
+
+            // Reset points awarded flag
+            seriesData.pointsAwarded = false
         }
 
         // Clear the game result
@@ -423,6 +423,15 @@ export const useTournamentStore = defineStore('tournament', () => {
             if (config.value.roundTimerMinutes) {
                 startRoundTimer()
             }
+        }
+    }
+
+    function goToPreviousRound() {
+        if (currentRound.value > 1) {
+            currentRound.value--
+
+            // Stop the timer when going back
+            stopRoundTimer()
         }
     }
 
@@ -577,6 +586,7 @@ export const useTournamentStore = defineStore('tournament', () => {
         clearGameResult,
         getSeriesGames,
         advanceToNextRound,
+        goToPreviousRound,
         startRoundTimer,
         stopRoundTimer,
         resetTournament,

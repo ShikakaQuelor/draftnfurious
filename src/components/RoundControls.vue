@@ -48,25 +48,41 @@
         <h3 class="text-2xl lg:text-3xl font-bold text-gradient-gold parchment-text">Round Controls</h3>
       </div>
 
-      <button 
-        @click="$emit('advance-round')"
-        :disabled="!canAdvanceRound"
-        class="btn btn-primary btn-large text-lg lg:text-xl px-6 py-3 lg:px-8 lg:py-4 mb-6 lg:mb-8 w-full sm:w-auto"
-        v-if="!isLastRound"
-      >
-        <span class="flex items-center justify-center gap-2 lg:gap-3">
-          <span>🚀</span>
-          <span class="text-sm sm:text-base lg:text-lg">ADVANCE TO ROUND {{ currentRound + 1 }}</span>
-          <span>🚀</span>
-        </span>
-      </button>
+      <!-- Round Navigation -->
+      <div class="flex flex-col sm:flex-row gap-4 mb-6 lg:mb-8">
+        <button 
+          @click="$emit('previous-round')"
+          :disabled="currentRound <= 1"
+          class="btn btn-secondary px-4 py-2 lg:px-6 lg:py-3 text-sm lg:text-base disabled:opacity-50 disabled:cursor-not-allowed"
+        >
+          <span class="flex items-center justify-center gap-2">
+            <span>⬅️</span>
+            <span>PREVIOUS ROUND</span>
+          </span>
+        </button>
+
+        <button 
+          @click="$emit('advance-round')"
+          :disabled="!canAdvanceRound"
+          class="btn btn-primary btn-large text-lg lg:text-xl px-6 py-3 lg:px-8 lg:py-4 flex-1"
+          v-if="!isLastRound"
+        >
+          <span class="flex items-center justify-center gap-2 lg:gap-3">
+            <span>🚀</span>
+            <span class="text-sm sm:text-base lg:text-lg">ADVANCE TO ROUND {{ currentRound + 1 }}</span>
+            <span>🚀</span>
+          </span>
+        </button>
+      </div>
       
-      <div v-else-if="tournamentComplete" class="text-center mb-6 lg:mb-8">
+      <!-- Tournament Complete Message -->
+      <div v-if="tournamentComplete" class="text-center mb-6 lg:mb-8">
         <div class="text-4xl lg:text-6xl mb-4">🎉</div>
         <h2 class="text-2xl lg:text-3xl font-black text-gradient mb-4 parchment-text">TOURNAMENT COMPLETE!</h2>
         <p class="text-lg lg:text-xl text-amber-200 parchment-text">Check the overview for final standings</p>
       </div>
       
+      <!-- Waiting Message -->
       <p v-if="!canAdvanceRound && !isLastRound" class="text-amber-300 italic text-base lg:text-lg flex items-center justify-center gap-2 parchment-text mb-6 lg:mb-8">
         <span>⏳</span> Complete all battles to advance to the next round
       </p>
@@ -102,6 +118,7 @@ defineProps<Props>()
 
 defineEmits<{
   'advance-round': []
+  'previous-round': []
   'go-to-summary': []
   'show-reset-confirm': []
 }>()

@@ -70,17 +70,8 @@
 
 <script setup lang="ts">
 import { useTournamentStore } from './stores/tournament'
-import { useRouter } from 'vue-router'
 
-const router = useRouter()
 const tournamentStore = useTournamentStore()
-
-function resetTournament() {
-  const success = tournamentStore.resetTournament()
-  if (success) {
-    router.push('/')
-  }
-}
 
 function formatTime(seconds: number): string {
   const mins = Math.floor(seconds / 60)
